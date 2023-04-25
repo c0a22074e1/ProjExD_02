@@ -2,6 +2,15 @@ import pygame as pg
 import random
 import sys
 
+
+delta = {
+    pg.K_UP: (0, -1),
+    pg.K_DOWN: (0, +1),
+    pg.K_LEFT: (-1, 0),
+    pg.K_RIGHT:(+1, 0)
+}  # 4
+
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((1600, 900))
@@ -9,6 +18,9 @@ def main():
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    kk_rect = kk_img.get_rect()  # 4
+    kk_rect.center = (900, 400)  # 4
+
     bb_img = pg.Surface((20, 20))  # 練習1
     pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)  # 練習1
     bb_img.set_colorkey((0, 0, 0))  # 練習1
@@ -25,10 +37,17 @@ def main():
                 return 0
 
         tmr += 1
+
+        key_list = pg.key.get_pressed()
+        for k, mv in delta.items():  # 4
+            if key_list[k]:  # 4
+                kk_rect.move_ip(mv)  # 4
+
+
         screen.blit(bg_img, [0, 0])
-        screen.blit(kk_img, [900, 400])
+        screen.blit(kk_img, kk_rect)
         bb_rect.move_ip(vx, vy)  # 3
-        screen.blit(bb_img, bb_rect)
+        screen.blit(bb_img, bb_rect)  # 3
 
         pg.display.update()
         clock.tick(1000)
