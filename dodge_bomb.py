@@ -12,6 +12,8 @@ def main():
     bb_img = pg.Surface((20, 20))  # 練習1
     pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)  # 練習1
     bb_img.set_colorkey((0, 0, 0))  # 練習1
+    x, y = random.randint(0, 1600), random.randint(0, 900)  # 2
+    screen.blit(bb_img, [x, y])  # 2
     tmr = 0
 
     while True:
