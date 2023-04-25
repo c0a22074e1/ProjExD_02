@@ -16,6 +16,7 @@ def main():
     screen.blit(bb_img, [x, y])  # 2
     vx, vy = +1, +1  # 3
     bb_rect = bb_img.get_rect()  # 3
+    bb_rect.center = (x, y)  # 3
     tmr = 0
 
     while True:
