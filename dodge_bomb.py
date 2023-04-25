@@ -14,6 +14,8 @@ def main():
     bb_img.set_colorkey((0, 0, 0))  # 練習1
     x, y = random.randint(0, 1600), random.randint(0, 900)  # 2
     screen.blit(bb_img, [x, y])  # 2
+    vx, vy = +1, +1  # 3
+    bb_rect = bb_img.get_rect()  # 3
     tmr = 0
 
     while True:
@@ -24,7 +26,8 @@ def main():
         tmr += 1
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, [900, 400])
-        screen.blit(bb_img, [600, 200])
+        bb_rect.move_ip(vx, vy)  # 3
+        screen.blit(bb_img, bb_rect)
 
         pg.display.update()
         clock.tick(1000)
