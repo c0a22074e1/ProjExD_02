@@ -1,6 +1,7 @@
 import pygame as pg
 import random
 import sys
+import time
 
 
 delta = {
@@ -21,6 +22,8 @@ delta = {
     pg.K_LEFT: (-1, 0),
     pg.K_UP and pg.K_LEFT: (-1, -1),
 }  # 追加課題１"""
+
+
 
 
 def check_bound(scr_rect, obj_rect) -> tuple[bool, bool]:  # 練習5
@@ -58,16 +61,15 @@ def main():
     bb_rect = bb_img.get_rect()  # 練習3
     bb_rect.center = (x, y)  # 練習3
     tmr = 0
-    time = 0  # 3
 
-    """bb_imgs = []  # 追加課題２
+    bb_imgs = []  # 追加課題２
     accs = [a for a in range(1, 11)]
     for r in range(1, 11):
         bb_img = pg.Surface((20*r, 20*r))
         pg.draw.circle(bb_img, (255, 0, 0), (10*r, 10*r), 10*r)
         bb_imgs.append(bb_img)
-    avs, avy = vx*accs[min(tmr//1000, 9)], vy*accs[min(tmr//1000, 9)]
-    bb_img = bb_imgs[min(tmr//1000, 9)]"""
+        bb_img.set_colorkey((0, 0, 0))
+    
 
     
 
@@ -78,6 +80,14 @@ def main():
                 return 0
 
         tmr += 1
+
+        if kk_rect.colliderect(bb_rect):  # 練習6
+            kk_img = kk_lose_img  # 追加課題３
+            screen.blit(bg_img, [0, 0])  # 追加課題３
+            screen.blit(kk_img, kk_rect)  # 追加課題３
+            pg.display.update()  # 追加課題３
+            time.sleep(5)  # 追加課題３
+            return  # 練習6
 
         key_list = pg.key.get_pressed()  # 練習4
         for k, mv in delta.items():  # 練習4
@@ -98,26 +108,28 @@ def main():
         if not tate:  # 練習5
             vy *= -1
         screen.blit(bb_img, bb_rect)  # 練習5
-        if kk_rect.colliderect(bb_rect):  # 練習6
-            # return  # 練習6
-            time += 1  # 3
-            
-        if time >= 1:  # 3
-            time += 1  # 3
-            screen.blit(kk_lose_img[300, 300])  # 3
-            if time >= 5000:  # 3
-                return  # 3
+        """if kk_rect.colliderect(bb_rect):  # 練習6
+            kk_img = kk_lose_img
+            screen.blit(kk_img, kk_rect)
+            pg.display.update()
+            time.sleep(1)
+            return  # 練習6
         
-        """koukaton_list = pg.key.get_pressed()
+        koukaton_list = pg.key.get_pressed()
         if koukaton_list in kaiten:
             dx, dy = kaiten[event.key]
         image_x += dx * 5
         image_y += dy * 5  # 追加課題１"""
+
+        avs, avy = vx*accs[min(tmr//1000, 9)], vy*accs[min(tmr//1000, 9)]
+        bb_img = bb_imgs[min(tmr//1000, 9)]
+        bb_rect.move_ip(vx + avs, vy + avy)
         
 
         pg.display.update()
         clock.tick(1000)
 
+        
 
 if __name__ == "__main__":
     pg.init()
